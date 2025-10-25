@@ -10,6 +10,8 @@ import { LuLaptopMinimalCheck } from "react-icons/lu";
 
 
 export function AuthPage() {
+
+
   let [auth, setauth ] = useState(true);
 
 
@@ -165,17 +167,22 @@ export function AuthPage() {
 
         <div className="border-green-100 border rounded-lg px-2 py-2">
           <div>
-            <dive>Access Your Account</dive>
+            <div>Access Your Account</div>
             <div>Login or create a new account to start voting</div>
           </div>
           <div>
             {/* <div value={isLogin ? 'login' : 'register'} onValueChange={(v) => setIsLogin(v === 'login')}> */}
-              <div className="flex justify-center gap-7 mb-6 bg-black/20 ">
-                <span >Login</span>
-                <span >Register</span>
-              </div>
+            <div className="flex justify-center items-center my-2">
+              <span className=" justify-center gap-7 mb-6 py-0.5 bg-black/20 inline rounded-lg  ">
+                <span onClick={()=>setauth(!auth)} className={`${auth?'bg-white px-5 py-0.5 rounded-lg border border-black/20':' px-5'}`}  >Login</span>
+                <span onClick={()=>setauth(!auth)} className={`${!auth ? 'bg-white px-5 py-0.5 rounded-lg border border-black/20' :' px-5'}`} >Register</span>
+              </span>
 
-              <div value="login">
+            </div>
+
+
+            {auth ? 
+              <div >
                 <form onSubmit={handleLogin} className="space-y-4">
                   {/* {error && (
                     <Alert variant="destructive">
@@ -183,21 +190,24 @@ export function AuthPage() {
                     </Alert>
                   )} */}
 
-                  <div className="space-y-2">
-                    <label htmlFor="login-email">Email</label>
+                  <div className=" flex flex-col ">
+                    <label className=""  htmlFor="login-email">Username</label>
                     <input
+                    className="border border-black/10 rounded-md px-2 py-1"
                       id="login-email"
-                      type="email"
-                      placeholder="your@email.com"
+                      type="text"
+                      placeholder="John doe "
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       required
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="flex flex-col">
                     <label htmlFor="login-password">Password</label>
                     <input
+                    className="border border-black/10 rounded-md px-2 py-1"
+
                       id="login-password"
                       type="password"
                       placeholder="••••••••"
@@ -209,7 +219,7 @@ export function AuthPage() {
 
                   <button
                     type="submit"
-                    className="w-full bg-green-600 hover:bg-green-700"
+                    className="w-full bg-green-600 hover:bg-green-700 rounded-md py-1"
                     disabled={loading}
                   >
                     {loading ? (
@@ -222,9 +232,14 @@ export function AuthPage() {
                     )}
                   </button>
                 </form>
-              </div>
+              </div>:''
+            
 
-              <div value="register">
+          }
+
+            {!auth ? 
+             
+              <div >
                 <form onSubmit={handleRegister} className="space-y-4">
                   {/* {error && (
                     <Alert variant="destructive">
@@ -232,9 +247,10 @@ export function AuthPage() {
                     </Alert>
                   )} */}
 
-                  <div className="space-y-2">
+                  <div className=" flex flex-col ">
                     <label htmlFor="fullName">Full Name</label>
                     <input
+                      className="border border-black/10 rounded-md px-2 py-1"
                       id="fullName"
                       type="text"
                       placeholder="John Doe"
@@ -244,13 +260,14 @@ export function AuthPage() {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="flex flex-col ">
                     <label htmlFor="nin">
-                      National Identification Number (NIN)
-                      <span className="text-gray-500 ml-2">Optional</span>
+                      Employee's ID
+                  
                     </label>
                     <div className="relative">
                       <input
+                      className="w-full px-2 py-1 rounded-md border border-black/10"
                         id="nin"
                         type="text"
                         placeholder="12345678901"
@@ -260,12 +277,13 @@ export function AuthPage() {
                       />
                       {/* <Shield className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-600" /> */}
                     </div>
-                    <p className="text-gray-500">11-digit NIN for enhanced verification</p>
+                    <p className="text-gray-500">11-digit employeeId for enhanced verification</p>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className=" flex flex-col ">
                     <label htmlFor="register-email">Email</label>
                     <input
+                      className="border border-black/10 rounded-md px-2 py-1"
                       id="register-email"
                       type="email"
                       placeholder="your@email.com"
@@ -275,10 +293,11 @@ export function AuthPage() {
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="flex flex-col">
                     
                     <label htmlFor="register-password">Password</label>
                     <input
+                      className="border border-black/10 rounded-md px-2 py-1"
                       id="register-password"
                       type="password"
                       placeholder="••••••••"
@@ -290,22 +309,10 @@ export function AuthPage() {
                  
                   </div>
 
-                  <div className="space-y-2">
-                    <div htmlFor="role">Account Type</div>
-                    <select
-                      id="role"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                      // value={role}
-                      onChange={(e) => setRole(e.target.value )}
-                    >
-                      <option value="voter">Voter - Participate in polls</option>
-                      <option value="creator">Creator - Create and manage polls</option>
-                    </select>
-                  </div>
-
+             
                   <button
                     type="submit"
-                    className="w-full bg-green-600 hover:bg-green-700"
+                    className="w-full bg-green-600 hover:bg-green-700 rounded-md py-1"
                     
                   >
                     {loading ? (
@@ -319,6 +326,8 @@ export function AuthPage() {
                   </button>
                 </form>
               </div>
+              :''
+            }
             {/* </div> */}
           </div>
         </div>
