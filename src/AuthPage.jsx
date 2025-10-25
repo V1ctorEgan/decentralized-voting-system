@@ -1,150 +1,42 @@
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
-<<<<<<< Updated upstream
 import { LuLaptopMinimalCheck } from "react-icons/lu";
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
-
-const projectId = import.meta.env.VITE_PROJECT_ID;
-const publicAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-
-
-
-
-export function AuthPage({ onLogin }) {
-
-
-  let [auth, setauth ] = useState(true);
-=======
-// import { LuLaptopMinimalCheck } from "react-icons/lu";
+import axios from "axios";
 
 export function AuthPage() {
-  // let [auth, setauth] = useState(true);
->>>>>>> Stashed changes
+  let [auth, setauth ] = useState(true);
 
-  // const [isLogin, setIsLogin] = useState(true);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
+  let [logindata , setlogindata] = useState({
+    username: '',
+    password: ''
+  });
 
-  // Login form
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-
-  // Register form
-<<<<<<< Updated upstream
-  const [registerEmail, setRegisterEmail] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [nin, setNin] = useState('');
-  const [role, setRole] = useState('voter');
+  let [registerdata , setregisterdata] = useState({
+    username: '',
+    employeeId: '',
+    email: '',
+    password: ''
+  });
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
+    console.log(logindata, 'this is the login');
 
-    try {
-      const { data: { session }, error: authError } = await supabase.auth.signInWithPassword({
-        email: loginEmail,
-        password: loginPassword,
-      });
-
-      if (authError) throw authError;
-
-      if (!session?.access_token) {
-        throw new Error('No session token received');
-      }
-
-      // Get user profile
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-fefa2b51/user/profile`,
-        {
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to get user profile: ${errorText}`);
-      }
-
-      const userData = await response.json();
-      onLogin(userData);
-    } catch (err) {
-      console.error('Login error:', err);
-      setError(err.message || 'Failed to login. Please check your credentials.');
-    } finally {
-      setLoading(false);
-    }
+    
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError('');
-=======
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [nin, setNin] = useState("");
-  // const [role, setRole] = useState<'voter' | 'creator'>('voter');
-
-  const handleLogin = async () => {};
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setError("");
->>>>>>> Stashed changes
-    setLoading(true);
-
-    try {
-      // Validate NIN (11 digits for Nigerian NIN)
-      if (nin && !/^\d{11}$/.test(nin)) {
-        throw new Error("NIN must be 11 digits");
-      }
-
-      // Register user via backend
-      const response = await fetch();
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Registration failed");
-      }
-
-      // const data = await response.json();
-
-      // Now login
-
-      // Get user profile
-      const profileResponse = await fetch();
-      // `https://${projectId}.supabase.co/functions/v1/make-server-fefa2b51/user/profile`,
-
-      if (!profileResponse.ok) {
-        throw new Error("Failed to get user profile");
-      }
-
-      // const userData = await profileResponse.json();
-      // Login(userData);
-    } catch (err) {
-      console.error("Registration error:", err);
-      setError(err.message || "Failed to register. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    console.log(registerdata, 'this is the register');
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md">
         <Link
-          to={"/"}
+          to={'/'}
+        
           className="mb-6 text-green-600 hover:text-green-700 flex  items-center"
         >
           <FaArrowLeft className="mr-2 h-3 w-3" />
@@ -153,12 +45,10 @@ export function AuthPage() {
 
         <div className="text-center mb-4">
           <div className="h-16 w-16 bg-linear-to-br from-green-600 to-green-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <LuLaptopMinimalCheck className="h-8 w-8 text-white" />
+            < LuLaptopMinimalCheck className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-green-900 mb-2">Welcome to LedgerVote</h1>
-          <p className="text-gray-600">
-            Secure, transparent, and decentralized voting
-          </p>
+          <p className="text-gray-600">Secure, transparent, and decentralized voting</p>
         </div>
 
         <div className="border-green-100 border rounded-lg px-2 py-2">
@@ -168,7 +58,6 @@ export function AuthPage() {
           </div>
           <div>
             {/* <div value={isLogin ? 'login' : 'register'} onValueChange={(v) => setIsLogin(v === 'login')}> */}
-<<<<<<< Updated upstream
             <div className="flex justify-center items-center my-2">
               <span className=" justify-center gap-7 mb-6 py-0.5 bg-black/20 inline rounded-lg  ">
                 <span onClick={()=>setauth(!auth)} className={`${auth?'bg-white px-5 py-0.5 rounded-lg border border-black/20':' px-5'}`}  >Login</span>
@@ -182,22 +71,11 @@ export function AuthPage() {
               <div >
                 <form onSubmit={handleLogin} className="space-y-4">
                   {/* {error && (
-=======
-            <div className="flex justify-center gap-7 mb-6 bg-black/20 ">
-              <span>Login</span>
-              <span>Register</span>
-            </div>
-
-            <div value="login">
-              <form onSubmit={handleLogin} className="space-y-4">
-                {/* {error && (
->>>>>>> Stashed changes
                     <Alert variant="destructive">
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )} */}
 
-<<<<<<< Updated upstream
                   <div className=" flex flex-col ">
                     <label className=""  htmlFor="login-email">Username</label>
                     <input
@@ -205,8 +83,8 @@ export function AuthPage() {
                       id="login-email"
                       type="text"
                       placeholder="John doe "
-                      value={loginEmail}
-                      onChange={(e) => setLoginEmail(e.target.value)}
+                      value={logindata.username}
+                      onChange={(e) => setlogindata({...logindata , username: e.target.value})}
                       required
                     />
                   </div>
@@ -219,25 +97,21 @@ export function AuthPage() {
                       id="login-password"
                       type="password"
                       placeholder="••••••••"
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
+                      value={logindata.password}
+                      onChange={(e) => setlogindata({...logindata , password: e.target.value})}
                       required
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-green-600 hover:bg-green-700 rounded-md py-1"
-                    disabled={loading}
+                    className="w-full bg-green-600 hover:bg-green-700 rounded-md py-2"
+                    // disabled={loading}
                   >
-                    {loading ? (
-                      <>
-                        {/* <Loader2 className="mr-2 h-4 w-4 animate-spin" /> */}
-                        Logging in...
-                      </>
-                    ) : (
+                 
+                
                       'Login'
-                    )}
+                  
                   </button>
                 </form>
               </div>:''
@@ -250,103 +124,28 @@ export function AuthPage() {
               <div >
                 <form onSubmit={handleRegister} className="space-y-4">
                   {/* {error && (
-=======
-                <div className="space-y-2">
-                  <label htmlFor="login-email">Email</label>
-                  <input
-                    id="login-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="login-password">Password</label>
-                  <input
-                    id="login-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <>
-                      {/* <Loader2 className="mr-2 h-4 w-4 animate-spin" /> */}
-                      Logging in...
-                    </>
-                  ) : (
-                    "Login"
-                  )}
-                </button>
-              </form>
-            </div>
-
-            <div value="register">
-              <form onSubmit={handleRegister} className="space-y-4">
-                {/* {error && (
->>>>>>> Stashed changes
                     <Alert variant="destructive">
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )} */}
 
-<<<<<<< Updated upstream
                   <div className=" flex flex-col ">
                     <label htmlFor="fullName">Full Name</label>
                     <input
                       className="border border-black/10 rounded-md px-2 py-1"
                       id="fullName"
-=======
-                <div className="space-y-2">
-                  <label htmlFor="fullName">Full Name</label>
-                  <input
-                    id="fullName"
-                    type="text"
-                    placeholder="John Doe"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="nin">
-                    National Identification Number (NIN)
-                    <span className="text-gray-500 ml-2">Optional</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="nin"
->>>>>>> Stashed changes
                       type="text"
-                      placeholder="12345678901"
-                      value={nin}
-                      onChange={(e) => setNin(e.target.value)}
-                      maxLength={11}
+                      placeholder="John Doe"
+                      value={registerdata.username}
+                      onChange={(e) => setregisterdata({...registerdata , username: e.target.value})}
+                      required
                     />
-                    {/* <Shield className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-600" /> */}
                   </div>
-                  <p className="text-gray-500">
-                    11-digit NIN for enhanced verification
-                  </p>
-                </div>
 
-<<<<<<< Updated upstream
                   <div className="flex flex-col ">
                     <label htmlFor="nin">
-                      Employee's ID
-                  
+                      employeeId
+                     
                     </label>
                     <div className="relative">
                       <input
@@ -354,13 +153,13 @@ export function AuthPage() {
                         id="nin"
                         type="text"
                         placeholder="12345678901"
-                        value={nin}
-                        onChange={(e) => setNin(e.target.value)}
+                        value={registerdata.employeeId}
+                        onChange={(e) => setregisterdata({...registerdata , employeeId: e.target.value  })}
                         maxLength={11}
                       />
                       {/* <Shield className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-600" /> */}
                     </div>
-                    <p className="text-gray-500">11-digit employeeId for enhanced verification</p>
+                    <p className="text-gray-500">11-digit NIN for enhanced verification</p>
                   </div>
 
                   <div className=" flex flex-col ">
@@ -370,8 +169,8 @@ export function AuthPage() {
                       id="register-email"
                       type="email"
                       placeholder="your@email.com"
-                      value={registerEmail}
-                      onChange={(e) => setRegisterEmail(e.target.value)}
+                      value={registerdata.email}
+                      onChange={(e) => setregisterdata({...registerdata , email: e.target.value})}
                       required
                     />
                   </div>
@@ -384,8 +183,8 @@ export function AuthPage() {
                       id="register-password"
                       type="password"
                       placeholder="••••••••"
-                      value={registerPassword}
-                      onChange={(e) => setRegisterPassword(e.target.value)}
+                      value={registerdata.password}
+                      onChange={(e) => setregisterdata({...registerdata , password: e.target.value})}
                       required
                       minLength={6}
                     />
@@ -395,86 +194,28 @@ export function AuthPage() {
              
                   <button
                     type="submit"
-                    className="w-full bg-green-600 hover:bg-green-700 rounded-md py-1"
+                    className="w-full bg-green-600 hover:bg-green-700 rounded-md py-2"
                     
                   >
-                    {loading ? (
-                      <>
-                        {/* <Loader2 className="mr-2 h-4 w-4 animate-spin" /> */}
-                        Creating Account...
-                      </>
-                    ) : (
-                      'Create Account'
-                    )}
+                  
+                  
+                     
+                      
+                
+                      Create Account
+                  
                   </button>
                 </form>
               </div>
               :''
             }
-=======
-                <div className="space-y-2">
-                  <label htmlFor="register-email">Email</label>
-                  <input
-                    id="register-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={registerEmail}
-                    onChange={(e) => setRegisterEmail(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="register-password">Password</label>
-                  <input
-                    id="register-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={registerPassword}
-                    onChange={(e) => setRegisterPassword(e.target.value)}
-                    required
-                    minLength={6}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <div htmlFor="role">Account Type</div>
-                  <select
-                    id="role"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    // value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                  >
-                    <option value="voter">Voter - Participate in polls</option>
-                    <option value="creator">
-                      Creator - Create and manage polls
-                    </option>
-                  </select>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700"
-                >
-                  {loading ? (
-                    <>
-                      {/* <Loader2 className="mr-2 h-4 w-4 animate-spin" /> */}
-                      Creating Account...
-                    </>
-                  ) : (
-                    "Create Account"
-                  )}
-                </button>
-              </form>
-            </div>
->>>>>>> Stashed changes
             {/* </div> */}
           </div>
         </div>
 
         <div className="mt-6 text-center text-gray-600">
           <p className="flex items-center justify-center gap-2">
-            {/* <Shield className="h-4 w-4 text-green-600" /> */}
+          
             Your data is secured with blockchain technology
           </p>
         </div>
