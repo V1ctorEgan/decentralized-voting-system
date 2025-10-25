@@ -2,14 +2,21 @@ import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { LuLaptopMinimalCheck } from "react-icons/lu";
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
+const projectId = import.meta.env.VITE_PROJECT_ID;
+const publicAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 
 
 
 
-
-
-export function AuthPage() {
+export function AuthPage({ onLogin }) {
 
 
   let [auth, setauth ] = useState(true);
@@ -28,9 +35,9 @@ export function AuthPage() {
   const [registerPassword, setRegisterPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [nin, setNin] = useState('');
-  // const [role, setRole] = useState<'voter' | 'creator'>('voter');
+  const [role, setRole] = useState('voter');
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -72,7 +79,7 @@ export function AuthPage() {
     }
   };
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
