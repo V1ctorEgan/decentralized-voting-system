@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Edit3, Trash2, PlusCircle } from "lucide-react";
-
+    
 const nigeriaPositions = [
   "President",
   "Vice President",

@@ -23,6 +23,8 @@ export function AuthPage() {
     e.preventDefault();
     console.log(logindata, 'this is the login');
 
+    
+
 
   };
 
