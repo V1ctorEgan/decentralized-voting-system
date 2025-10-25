@@ -23,7 +23,7 @@ export function AuthPage() {
     e.preventDefault();
     console.log(logindata, 'this is the login');
 
-    
+
   };
 
   const handleRegister = async (e) => {
@@ -108,9 +108,9 @@ export function AuthPage() {
                     className="w-full bg-green-600 hover:bg-green-700 rounded-md py-2"
                     // disabled={loading}
                   >
-                 
+                 <Link to='/dashboard'>Login</Link>
                 
-                      'Login'
+                      
                   
                   </button>
                 </form>
@@ -200,9 +200,9 @@ export function AuthPage() {
                   
                   
                      
-                      
+                      <Link to='/dashboard'>Create Acount</Link>
                 
-                      Create Account
+                      {/* Create Account */}
                   
                   </button>
                 </form>

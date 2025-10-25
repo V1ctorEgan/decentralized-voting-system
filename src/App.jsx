@@ -6,6 +6,8 @@ import DashboardHome from "././components/pages/viewDash.jsx";
 import CreateElection from "././components/pages/CreateElection.jsx";
 import Results from "././components/pages/Results.jsx";
 import Settings from "././components/pages/Settings.jsx";
+import Adminsetup from "./Adminsetup.jsx";
+import { AuthPage } from "./AuthPage.jsx";
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
       <div className="">
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {/* <Route path="/register" element={<AuthPage />} /> */}
+          <Route path="/setup" element={<Adminsetup />} />
+          <Route path="/register" element={<AuthPage />} />
+          
           <Route path="/dashboard" element={<Dashboard />}>
             <Route index element={<DashboardHome />} />
             <Route path="home" element={<DashboardHome />} />

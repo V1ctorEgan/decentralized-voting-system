@@ -29,7 +29,7 @@ export function LandingPage() {
           </div>
           {/* <Button onClick={onGetStarted} variant="default" className="bg-green-600 hover:bg-green-700"> */}
 
-          <Link to={'register/'}>
+          <Link to={'setup/'}>
           <button className="flex  justify-center items-center gap-2 rounded-lg px-5 py-1 text-white bg-green-600 hover:bg-green-700 border border-green-700 ">
             Get Started
             <FaArrowRight className="size-3" />
@@ -62,7 +62,7 @@ export function LandingPage() {
           <div className="flex flex-wrap gap-4 justify-center">
             {/* <Button onClick={onGetStarted} size="lg" className="bg-green-600 hover:bg-green-700"> */}
             <button  className="bg-green-600 hover:bg-green-700 text-md text-white border border-green-600 px-4 rounded-lg py-1 flex justify-center items-center gap-2 ">
-              Start Voting Now
+            <Link to={'/register'}> Start Voting Now</Link> 
             <FaArrowRight className="size-3" />
             </button>
           
