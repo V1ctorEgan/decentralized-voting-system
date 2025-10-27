@@ -11,10 +11,63 @@ import { GoLaw } from "react-icons/go";
 import { FaHelicopter } from "react-icons/fa";
 import { IoSchoolOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
-
-
+import { useState, useEffect } from "react";
+import { FaWallet } from "react-icons/fa";
 
 export function LandingPage() {
+   const [walletAddress, setWalletAddress] = useState("");
+  const [isConnecting, setIsConnecting] = useState(false);
+
+    // Check if wallet is already connected on component mount
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, []);
+
+  const checkIfWalletIsConnected = async () => {
+    try {
+      const { ethereum } = window;
+      if (!ethereum) return;
+
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      if (accounts.length > 0) {
+        setWalletAddress(accounts[0]);
+      }
+    } catch (error) {
+      console.error("Error checking wallet connection:", error);
+    }
+  };
+
+  
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        alert("Please install MetaMask or another Web3 wallet!");
+        return;
+      }
+
+      setIsConnecting(true);
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      setWalletAddress(accounts[0]);
+      setIsConnecting(false);
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      setIsConnecting(false);
+      alert("Failed to connect wallet. Please try again.");
+    }
+  };
+
+  const disconnectWallet = () => {
+    setWalletAddress("");
+  };
+
+  const formatAddress = (address) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -29,17 +82,41 @@ export function LandingPage() {
           </div>
           {/* <Button onClick={onGetStarted} variant="default" className="bg-green-600 hover:bg-green-700"> */}
 
-          <Link to={'setup/'}>
+          {/* <Link to={'setup/'}>
           <button className="flex  justify-center items-center gap-2 rounded-lg px-5 py-1 text-white bg-green-600 hover:bg-green-700 border border-green-700 ">
             Get Started
             <FaArrowRight className="size-3" />
           </button>
           
-          </Link>
+          </Link> */}
              {/* <ArrowRight className="ml-2 h-4 w-4" /> */}
           {/* </Button> */}
+
+          {/* ======================  added by Egan ==================== */}
+          
+           
+          { walletAddress? <div className="flex items-center gap-3"><div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-lg border border-green-200">
+                <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-green-700 font-medium">
+                  {formatAddress(walletAddress)}
+                </span>
+              </div>
+              <button
+                onClick={disconnectWallet}
+                className="text-gray-600 hover:text-gray-800 text-sm underline"
+              >
+                Disconnect
+              </button></div>: <button
+              onClick={connectWallet}
+              disabled={isConnecting}
+              className="flex justify-center items-center gap-2 rounded-lg px-5 py-2 text-white bg-green-600 hover:bg-green-700 border border-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+              <FaWallet className="size-4" />
+              {isConnecting ? "Connecting..." : "Connect Wallet"}
+            </button> }
         </div>
       </nav>
+
 
       {/* Hero */}
       <section className="container mx-auto px-6 py-20">
