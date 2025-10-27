@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { LuLaptopMinimalCheck } from "react-icons/lu";
-import axios from "axios";
+// import axios from "axios";
 
 export function AuthPage() {
   let [auth, setauth ] = useState(true);
@@ -22,6 +22,8 @@ export function AuthPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log(logindata, 'this is the login');
+
+    
 
 
   };
@@ -144,7 +146,7 @@ export function AuthPage() {
 
                   <div className="flex flex-col ">
                     <label htmlFor="nin">
-                      employeeId
+                      Employee ID
                      
                     </label>
                     <div className="relative">
